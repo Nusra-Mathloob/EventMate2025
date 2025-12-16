@@ -16,21 +16,37 @@ class EventController extends GetxController {
       isLoading.value = true;
       await _db.collection('events').add(event.toJson());
       isLoading.value = false;
-      Get.snackbar('Success', 'Event added successfully',
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green, colorText: Colors.white);
+      Get.snackbar(
+        'Success',
+        'Event added successfully',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
       Get.back(); // Go back to previous screen
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar('Error', 'Failed to add event',
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Failed to add event',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 
   // Read Events (Stream)
   Stream<List<EventModel>> getAllEvents() {
-    return _db.collection('events').orderBy('date', descending: false).snapshots().map((snapshot) {
-      return snapshot.docs.map((doc) => EventModel.fromSnapshot(doc)).toList();
-    });
+    return _db
+        .collection('events')
+        .orderBy('date', descending: false)
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs
+              .map((doc) => EventModel.fromSnapshot(doc))
+              .toList();
+        });
   }
 
   // Update Event
@@ -39,13 +55,23 @@ class EventController extends GetxController {
       isLoading.value = true;
       await _db.collection('events').doc(event.id).update(event.toJson());
       isLoading.value = false;
-      Get.snackbar('Success', 'Event updated successfully',
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green, colorText: Colors.white);
+      Get.snackbar(
+        'Success',
+        'Event updated successfully',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
       Get.back();
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar('Error', 'Failed to update event',
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Failed to update event',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 
@@ -53,11 +79,21 @@ class EventController extends GetxController {
   Future<void> deleteEvent(String id) async {
     try {
       await _db.collection('events').doc(id).delete();
-      Get.snackbar('Success', 'Event deleted successfully',
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green, colorText: Colors.white);
+      Get.snackbar(
+        'Success',
+        'Event deleted successfully',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
     } catch (e) {
-      Get.snackbar('Error', 'Failed to delete event',
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Failed to delete event',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 }
