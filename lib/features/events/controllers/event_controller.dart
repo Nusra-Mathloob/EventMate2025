@@ -9,7 +9,7 @@ class EventController extends GetxController {
 
   // final _db = FirebaseFirestore.instance; // DISABLED FOR DEVELOPMENT
   final isLoading = false.obs;
-  
+
   // Mock data for development (no Firebase needed)
   final RxList<EventModel> _mockEvents = <EventModel>[
     EventModel(
@@ -46,8 +46,13 @@ class EventController extends GetxController {
       event.id = DateTime.now().millisecondsSinceEpoch.toString();
       _mockEvents.add(event);
       isLoading.value = false;
-      Get.snackbar('Success', 'Event added successfully',
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green, colorText: Colors.white);
+      Get.snackbar(
+        'Success',
+        'Event added successfully',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
       Get.back();
     } catch (e) {
       isLoading.value = false;
@@ -60,10 +65,10 @@ class EventController extends GetxController {
   Stream<List<EventModel>> getAllEvents() {
     return Stream.value(_mockEvents.toList());
   }
-  
+
   // Get events as a list (for non-stream usage)
   List<EventModel> getEventsList() {
-    return _mockEvents.toList();
+        return _mockEvents.toList();
   }
 
   // Update Event (Mock)
@@ -91,8 +96,13 @@ class EventController extends GetxController {
     try {
       await Future.delayed(const Duration(milliseconds: 300));
       _mockEvents.removeWhere((event) => event.id == id);
-      Get.snackbar('Success', 'Event deleted successfully',
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green, colorText: Colors.white);
+      Get.snackbar(
+        'Success',
+        'Event deleted successfully',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
     } catch (e) {
       Get.snackbar('Error', 'Failed to delete event',
           snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, colorText: Colors.white);

@@ -15,7 +15,9 @@ class UserProfileModel {
     this.profileImage,
   });
 
-  factory UserProfileModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+  factory UserProfileModel.fromSnapshot(
+    DocumentSnapshot<Map<String, dynamic>> document,
+  ) {
     final data = document.data()!;
     return UserProfileModel(
       id: document.id,

@@ -13,10 +13,7 @@ class ProfileScreen extends StatelessWidget {
     final controller = Get.put(ProfileController());
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Profile'), centerTitle: true),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Obx(() {
@@ -32,9 +29,15 @@ class ProfileScreen extends StatelessWidget {
                   CircleAvatar(
                     radius: 60,
                     backgroundColor: AppColors.primary.withOpacity(0.1),
-                    backgroundImage: user.profileImage != null ? NetworkImage(user.profileImage!) : null,
+                    backgroundImage: user.profileImage != null
+                        ? NetworkImage(user.profileImage!)
+                        : null,
                     child: user.profileImage == null
-                        ? const Icon(Icons.person, size: 60, color: AppColors.primary)
+                        ? const Icon(
+                            Icons.person,
+                            size: 60,
+                            color: AppColors.primary,
+                          )
                         : null,
                   ),
                   Positioned(
@@ -47,13 +50,20 @@ class ProfileScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(100),
                         color: AppColors.primary,
                       ),
-                      child: const Icon(Icons.camera_alt, color: Colors.white, size: 20),
+                      child: const Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 10),
-              Text(user.fullName, style: Theme.of(context).textTheme.headlineSmall),
+              Text(
+                user.fullName,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
               Text(user.email, style: Theme.of(context).textTheme.bodyMedium),
               const SizedBox(height: 20),
               const Divider(),
@@ -133,7 +143,10 @@ class ProfileMenuWidget extends StatelessWidget {
         ),
         child: Icon(icon, color: AppColors.primary),
       ),
-      title: Text(title, style: Theme.of(context).textTheme.bodyLarge?.apply(color: textColor)),
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.bodyLarge?.apply(color: textColor),
+      ),
       trailing: endIcon
           ? Container(
               width: 30,
@@ -142,7 +155,12 @@ class ProfileMenuWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100),
                 color: Colors.grey.withOpacity(0.1),
               ),
-              child: const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.grey))
+              child: const Icon(
+                Icons.arrow_forward_ios,
+                size: 18,
+                color: Colors.grey,
+              ),
+            )
           : null,
     );
   }
@@ -175,9 +193,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final controller = Get.find<ProfileController>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Profile'),
-      ),
+      appBar: AppBar(title: const Text('Edit Profile')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -187,9 +203,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 CircleAvatar(
                   radius: 60,
                   backgroundColor: AppColors.primary.withOpacity(0.1),
-                  backgroundImage: widget.user.profileImage != null ? NetworkImage(widget.user.profileImage!) : null,
+                  backgroundImage: widget.user.profileImage != null
+                      ? NetworkImage(widget.user.profileImage!)
+                      : null,
                   child: widget.user.profileImage == null
-                      ? const Icon(Icons.person, size: 60, color: AppColors.primary)
+                      ? const Icon(
+                          Icons.person,
+                          size: 60,
+                          color: AppColors.primary,
+                        )
                       : null,
                 ),
                 Positioned(
@@ -202,7 +224,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       borderRadius: BorderRadius.circular(100),
                       color: AppColors.primary,
                     ),
-                    child: const Icon(Icons.camera_alt, color: Colors.white, size: 20),
+                    child: const Icon(
+                      Icons.camera_alt,
+                      color: Colors.white,
+                      size: 20,
+                    ),
                   ),
                 ),
               ],
@@ -239,20 +265,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Obx(() => CustomButton(
-                        text: 'UPDATE PROFILE',
-                        isLoading: controller.isLoading.value,
-                        onPressed: () {
-                          final updatedUser = UserProfileModel(
-                            id: widget.user.id,
-                            fullName: fullNameController.text.trim(),
-                            email: emailController.text.trim(),
-                            phoneNo: phoneController.text.trim(),
-                            profileImage: widget.user.profileImage,
-                          );
-                          controller.updateUserProfile(updatedUser);
-                        },
-                      )),
+                  Obx(
+                    () => CustomButton(
+                      text: 'UPDATE PROFILE',
+                      isLoading: controller.isLoading.value,
+                      onPressed: () {
+                        final updatedUser = UserProfileModel(
+                          id: widget.user.id,
+                          fullName: fullNameController.text.trim(),
+                          email: emailController.text.trim(),
+                          phoneNo: phoneController.text.trim(),
+                          profileImage: widget.user.profileImage,
+                        );
+                        controller.updateUserProfile(updatedUser);
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
