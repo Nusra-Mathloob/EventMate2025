@@ -1,6 +1,7 @@
+import 'package:event2025/features/profile/views/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_core/firebase_core.dart';
 import 'core/constants/app_colors.dart';
 import 'features/auth/views/splash_screen.dart';
 import 'features/auth/views/login_screen.dart';
@@ -41,11 +42,12 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Roboto', // Default, can be changed if GoogleFonts is used
       ),
       home: const Scaffold(body: Center(child: Text('EventMate Initialized'))),
-      initialRoute: '/splash',
+      initialRoute: '/profile',
       getPages: [
         GetPage(name: '/splash', page: () => const SplashScreen()),
         GetPage(name: '/login', page: () => const LoginScreen()),
         GetPage(name: '/home', page: () => const EventListScreen()),
+        GetPage(name: '/profile', page: () => const ProfileScreen()),
       ],
     );
   }
