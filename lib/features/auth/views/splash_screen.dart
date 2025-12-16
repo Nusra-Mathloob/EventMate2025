@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import '../../auth/controllers/auth_controller.dart';
+// import '../../auth/controllers/auth_controller.dart'; // DISABLED FOR DEVELOPMENT
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,13 +18,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigateToNextScreen() async {
-    await Future.delayed(const Duration(seconds: 3));
-    final authController = Get.put(AuthController());
-    if (authController.firebaseUser.value != null) {
-      Get.offAllNamed('/home');
-    } else {
-      Get.offAllNamed('/login');
-    }
+    await Future.delayed(const Duration(seconds: 2));
+    // Skip auth check for development
+    Get.offAllNamed('/home');
   }
 
   @override

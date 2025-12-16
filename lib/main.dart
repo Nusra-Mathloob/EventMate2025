@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart'; // DISABLED FOR DEVELOPMENT
 import 'core/constants/app_colors.dart';
 import 'features/auth/views/splash_screen.dart';
 import 'features/auth/views/login_screen.dart';
-import 'features/events/views/event_list_screen.dart';
+import 'features/home/views/home_screen.dart';
+import 'features/browse/views/browse_events_tab_screen.dart';
+import 'features/events/views/my_events_screen.dart';
+import 'features/favourites/views/favourites_screen.dart';
+import 'features/favourites/controllers/favourites_controller.dart';
 // import 'firebase_options.dart';
-// TODO: Add this after running flutterfire configure
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Firebase DISABLED for development - working on UI features
   // await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform,
-  // ); // TODO: Uncomment this after adding firebase_options.dart
+  // );
 
-  // For now, we'll just run the app without Firebase init to show UI
-  // In a real app, you MUST initialize Firebase first.
+  // Initialize global controllers
+  Get.put(FavouritesController());
 
   runApp(const MyApp());
 }
@@ -40,12 +44,16 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Roboto', // Default, can be changed if GoogleFonts is used
       ),
-      home: const Scaffold(body: Center(child: Text('EventMate Initialized'))),
-      initialRoute: '/splash',
+      // Skip auth and go directly to home screen for development
+      home: const HomeScreen(),
+      initialRoute: '/home',
       getPages: [
         GetPage(name: '/splash', page: () => const SplashScreen()),
         GetPage(name: '/login', page: () => const LoginScreen()),
-        GetPage(name: '/home', page: () => const EventListScreen()),
+        GetPage(name: '/home', page: () => const HomeScreen()),
+        GetPage(name: '/browse', page: () => const BrowseEventsTabScreen()),
+        GetPage(name: '/my-events', page: () => const EventListScreen()),
+        GetPage(name: '/favourites', page: () => const FavouritesScreen()),
       ],
     );
   }

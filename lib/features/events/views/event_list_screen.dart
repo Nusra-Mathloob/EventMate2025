@@ -5,7 +5,7 @@ import '../../../core/constants/app_colors.dart';
 import '../controllers/event_controller.dart';
 import 'add_event_screen.dart';
 import 'event_detail_screen.dart';
-import '../../auth/controllers/auth_controller.dart';
+// import '../../auth/controllers/auth_controller.dart'; // DISABLED FOR DEVELOPMENT
 
 class EventListScreen extends StatelessWidget {
   const EventListScreen({Key? key}) : super(key: key);
@@ -13,19 +13,20 @@ class EventListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(EventController());
-    final authController = Get.find<AuthController>();
+    // final authController = Get.find<AuthController>(); // DISABLED
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('EventMate', style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () {
-              authController.logout();
-            },
-            icon: const Icon(Icons.logout),
-          ),
+          // Logout disabled for development
+          // IconButton(
+          //   onPressed: () {
+          //     authController.logout();
+          //   },
+          //   icon: const Icon(Icons.logout),
+          // ),
         ],
       ),
       body: Padding(

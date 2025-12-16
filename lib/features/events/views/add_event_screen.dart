@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/widgets/custom_button.dart';
 import '../controllers/event_controller.dart';
 import '../models/event_model.dart';

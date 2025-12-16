@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart'; // DISABLED FOR DEVELOPMENT
 
 class EventModel {
   String? id;
@@ -17,23 +17,24 @@ class EventModel {
     required this.organizerId,
   });
 
-  factory EventModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
-    final data = document.data()!;
+  // Factory for creating from JSON (mock data)
+  factory EventModel.fromJson(Map<String, dynamic> json) {
     return EventModel(
-      id: document.id,
-      title: data['title'],
-      description: data['description'],
-      date: (data['date'] as Timestamp).toDate(),
-      location: data['location'],
-      organizerId: data['organizerId'],
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      date: json['date'] is DateTime ? json['date'] : DateTime.parse(json['date']),
+      location: json['location'],
+      organizerId: json['organizerId'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'title': title,
       'description': description,
-      'date': Timestamp.fromDate(date),
+      'date': date.toIso8601String(),
       'location': location,
       'organizerId': organizerId,
     };
