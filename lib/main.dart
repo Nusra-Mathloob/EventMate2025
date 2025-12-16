@@ -46,10 +46,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Roboto', // Default, can be changed if GoogleFonts is used
       ),
       // Skip auth and go directly to home screen for development
-      home: const HomeScreen(),
       initialRoute: '/home',
-      home: const Scaffold(body: Center(child: Text('EventMate Initialized'))),
-      initialRoute: '/profile',
       getPages: [
         GetPage(name: '/splash', page: () => const SplashScreen()),
         GetPage(name: '/login', page: () => const LoginScreen()),
@@ -57,7 +54,6 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/browse', page: () => const BrowseEventsTabScreen()),
         GetPage(name: '/my-events', page: () => const EventListScreen()),
         GetPage(name: '/favourites', page: () => const FavouritesScreen()),
-        GetPage(name: '/home', page: () => const EventListScreen()),
         GetPage(name: '/profile', page: () => const ProfileScreen()),
       ],
     );

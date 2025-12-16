@@ -4,6 +4,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../browse/views/browse_events_tab_screen.dart';
 import '../../events/views/my_events_screen.dart';
 import '../../favourites/views/favourites_screen.dart';
+import '../../profile/views/profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -18,6 +19,14 @@ class HomeScreen extends StatelessWidget {
         ),
         centerTitle: true,
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person),
+            onPressed: () {
+              Get.to(() => const ProfileScreen());
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

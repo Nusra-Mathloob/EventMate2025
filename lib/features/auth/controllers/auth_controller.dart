@@ -18,13 +18,13 @@ class AuthController extends GetxController {
     super.onReady();
   }
 
-  _setInitialScreen(User? user) {
-    if (user == null) {
-      Get.offAllNamed('/login');
-    } else {
-      Get.offAllNamed('/home');
-    }
-  }
+  // void _setInitialScreen(User? user) {
+  //   if (user == null) {
+  //     Get.offAllNamed('/login');
+  //   } else {
+  //     Get.offAllNamed('/home');
+  //   }
+  // }
 
   Future<void> register(String email, String password) async {
     try {
