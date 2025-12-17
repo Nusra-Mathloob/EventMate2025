@@ -1,9 +1,13 @@
+import 'package:event2025/features/profile/views/menu_screens/billing_details_screen.dart';
+import 'package:event2025/features/profile/views/menu_screens/information_screen.dart';
+import 'package:event2025/features/profile/views/menu_screens/user_management_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/widgets/custom_button.dart';
 import '../controllers/profile_controller.dart';
 import '../models/user_profile_model.dart';
+import './menu_screens/settings_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -71,24 +75,32 @@ class ProfileScreen extends StatelessWidget {
               ProfileMenuWidget(
                 title: "Settings",
                 icon: Icons.settings,
-                onPress: () {},
+                onPress: () {
+                  Get.to(() => const SettingsScreen());
+                },
               ),
               ProfileMenuWidget(
                 title: "Billing Details",
                 icon: Icons.wallet,
-                onPress: () {},
+                onPress: () {
+                  Get.to(() => const BillingDetailsScreen());
+                },
               ),
               ProfileMenuWidget(
                 title: "User Management",
                 icon: Icons.verified_user,
-                onPress: () {},
+                onPress: () {
+                  Get.to(() => const UserManagementScreen());
+                },
               ),
               const Divider(),
               const SizedBox(height: 10),
               ProfileMenuWidget(
                 title: "Information",
                 icon: Icons.info,
-                onPress: () {},
+                onPress: () {
+                  Get.to(() => const InformationScreen());
+                },
               ),
               ProfileMenuWidget(
                 title: "Logout",

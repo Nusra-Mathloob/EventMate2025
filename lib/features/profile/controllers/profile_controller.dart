@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../models/user_profile_model.dart';
@@ -32,10 +32,15 @@ class ProfileController extends GetxController {
         profileImage: null,
       );
     } catch (e) {
-      Get.snackbar('Error', 'Failed to fetch profile',
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Failed to fetch profile',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
-    
+
     /* FIREBASE CODE - COMMENTED FOR DEVELOPMENT
     if (email != null) {
       try {
@@ -59,20 +64,32 @@ class ProfileController extends GetxController {
       await Future.delayed(const Duration(milliseconds: 500));
       userProfile.value = user; // Update local state
       isLoading.value = false;
-      Get.snackbar('Success', 'Profile updated successfully',
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green, colorText: Colors.white);
+      Get.back(); // Redirect to Profile Page
+      Get.snackbar(
+        'Success',
+        'Profile updated successfully',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar('Error', 'Failed to update profile',
-          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Failed to update profile',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
-    
+
     /* FIREBASE CODE - COMMENTED FOR DEVELOPMENT
     try {
       isLoading.value = true;
       await _db.collection('users').doc(user.id).update(user.toJson());
       userProfile.value = user; // Update local state
       isLoading.value = false;
+      Get.back(); // Redirect to Profile Page
       Get.snackbar('Success', 'Profile updated successfully',
           snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green, colorText: Colors.white);
     } catch (e) {
