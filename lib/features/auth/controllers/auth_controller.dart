@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../profile/models/user_profile_model.dart';
+import '../../../core/db/user_local_db.dart';
 
 class AuthController extends GetxController {
   static AuthController get instance => Get.find();
@@ -40,13 +42,22 @@ class AuthController extends GetxController {
       );
       final uid = credentials.user?.uid;
       if (uid != null) {
+        final userProfile = UserProfileModel(
+          id: uid,
+          fullName: fullName,
+          email: email,
+          phoneNo: phoneNo,
+          profileImage: null,
+          createdAt: DateTime.now().toIso8601String(),
+        );
         await _db.collection('users').doc(uid).set({
-          'fullName': fullName,
-          'email': email,
-          'phoneNo': phoneNo,
-          'profileImage': null,
+          'fullName': userProfile.fullName,
+          'email': userProfile.email,
+          'phoneNo': userProfile.phoneNo,
+          'profileImage': userProfile.profileImage,
           'createdAt': FieldValue.serverTimestamp(),
         });
+        await UserLocalDb.instance.upsertUser(userProfile);
       }
       isLoading.value = false;
       Get.snackbar(
@@ -80,7 +91,8 @@ class AuthController extends GetxController {
   Future<void> login(String email, String password) async {
     try {
       isLoading.value = true;
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      final credentials = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _cacheUserFromFirestore(credentials.user?.uid);
       isLoading.value = false;
       Get.snackbar(
         'Success',
@@ -111,6 +123,15 @@ class AuthController extends GetxController {
   }
 
   Future<void> logout() async {
+    await UserLocalDb.instance.deleteUser();
     await _auth.signOut();
+  }
+
+  Future<void> _cacheUserFromFirestore(String? uid) async {
+    if (uid == null) return;
+    final doc = await _db.collection('users').doc(uid).get();
+    if (!doc.exists) return;
+    final profile = UserProfileModel.fromSnapshot(doc);
+    await UserLocalDb.instance.upsertUser(profile);
   }
 }
