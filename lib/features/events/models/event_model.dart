@@ -1,4 +1,4 @@
-// import 'package:cloud_firestore/cloud_firestore.dart'; // DISABLED FOR DEVELOPMENT
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventModel {
   String? id;
@@ -6,7 +6,7 @@ class EventModel {
   String description;
   DateTime date;
   String location;
-  String organizerId;
+  String userId;
 
   EventModel({
     this.id,
@@ -14,29 +14,57 @@ class EventModel {
     required this.description,
     required this.date,
     required this.location,
-    required this.organizerId,
+    required this.userId,
   });
 
-  // Factory for creating from JSON (mock data)
   factory EventModel.fromJson(Map<String, dynamic> json) {
+    final rawDate = json['date'];
+    final parsedDate = rawDate is Timestamp
+        ? rawDate.toDate()
+        : rawDate is DateTime
+        ? rawDate
+        : rawDate is String
+        ? DateTime.tryParse(rawDate) ?? DateTime.now()
+        : DateTime.now();
     return EventModel(
       id: json['id'],
       title: json['title'],
       description: json['description'],
-      date: json['date'] is DateTime ? json['date'] : DateTime.parse(json['date']),
+      date: parsedDate,
       location: json['location'],
-      organizerId: json['organizerId'],
+      userId: json['userId'] ?? json['organizerId'],
+    );
+  }
+
+  factory EventModel.fromSnapshot(
+    DocumentSnapshot<Map<String, dynamic>> document,
+  ) {
+    final data = document.data() ?? {};
+    final rawDate = data['date'];
+    final parsedDate = rawDate is Timestamp
+        ? rawDate.toDate()
+        : rawDate is DateTime
+        ? rawDate
+        : rawDate is String
+        ? DateTime.tryParse(rawDate) ?? DateTime.now()
+        : DateTime.now();
+    return EventModel(
+      id: document.id,
+      title: data['title'] ?? '',
+      description: data['description'] ?? '',
+      date: parsedDate,
+      location: data['location'] ?? '',
+      userId: data['userId'] ?? data['organizerId'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'title': title,
       'description': description,
-      'date': date.toIso8601String(),
+      'date': Timestamp.fromDate(date),
       'location': location,
-      'organizerId': organizerId,
+      'userId': userId,
     };
   }
 }

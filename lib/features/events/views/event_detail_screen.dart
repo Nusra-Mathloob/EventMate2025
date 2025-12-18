@@ -56,12 +56,18 @@ class EventDetailScreen extends StatelessWidget {
                 color: AppColors.primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Icon(Icons.event, size: 100, color: AppColors.primary),
+              child: const Icon(
+                Icons.event,
+                size: 100,
+                color: AppColors.primary,
+              ),
             ),
             const SizedBox(height: 24),
             Text(
               event.title,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             Row(
@@ -79,10 +85,7 @@ class EventDetailScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.location_on, color: AppColors.primary),
                 const SizedBox(width: 8),
-                Text(
-                  event.location,
-                  style: const TextStyle(fontSize: 16),
-                ),
+                Text(event.location, style: const TextStyle(fontSize: 16)),
               ],
             ),
             const SizedBox(height: 24),
