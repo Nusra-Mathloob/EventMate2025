@@ -6,6 +6,7 @@ class UserProfileModel {
   String email;
   String phoneNo;
   String? profileImage;
+  String? createdAt;
 
   UserProfileModel({
     this.id,
@@ -13,6 +14,7 @@ class UserProfileModel {
     required this.email,
     required this.phoneNo,
     this.profileImage,
+    this.createdAt,
   });
 
   factory UserProfileModel.fromSnapshot(
@@ -25,6 +27,20 @@ class UserProfileModel {
       email: data['email'],
       phoneNo: data['phoneNo'],
       profileImage: data['profileImage'],
+      createdAt: (data['createdAt'] is Timestamp)
+          ? (data['createdAt'] as Timestamp).toDate().toIso8601String()
+          : data['createdAt']?.toString(),
+    );
+  }
+
+  factory UserProfileModel.fromMap(Map<String, dynamic> data, {String? id}) {
+    return UserProfileModel(
+      id: id ?? data['id']?.toString(),
+      fullName: data['fullName'] ?? '',
+      email: data['email'] ?? '',
+      phoneNo: data['phoneNo'] ?? '',
+      profileImage: data['profileImage'],
+      createdAt: data['createdAt']?.toString(),
     );
   }
 
@@ -34,6 +50,18 @@ class UserProfileModel {
       'email': email,
       'phoneNo': phoneNo,
       'profileImage': profileImage,
+      'createdAt': createdAt,
+    };
+  }
+
+  Map<String, dynamic> toDbMap() {
+    return {
+      'id': id,
+      'fullName': fullName,
+      'email': email,
+      'phoneNo': phoneNo,
+      'profileImage': profileImage,
+      'createdAt': createdAt,
     };
   }
 }
