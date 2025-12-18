@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-// import '../../auth/controllers/auth_controller.dart'; // DISABLED FOR DEVELOPMENT
+import '../../auth/controllers/auth_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -14,13 +13,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    // Ensure the controller is ready so the auth listener can route
+    AuthController.instance;
     _navigateToNextScreen();
   }
 
-  _navigateToNextScreen() async {
+  Future<void> _navigateToNextScreen() async {
     await Future.delayed(const Duration(seconds: 2));
-    // Skip auth check for development
-    Get.offAllNamed('/home');
+    AuthController.instance.checkAuthState();
   }
 
   @override

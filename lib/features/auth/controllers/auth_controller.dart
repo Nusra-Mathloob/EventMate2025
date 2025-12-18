@@ -1,38 +1,53 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthController extends GetxController {
   static AuthController get instance => Get.find();
 
   // Variables
   final _auth = FirebaseAuth.instance;
-  late final Rx<User?> firebaseUser;
+  final _db = FirebaseFirestore.instance;
+  final Rx<User?> firebaseUser = Rx<User?>(null);
   var isLoading = false.obs;
 
   @override
   void onReady() {
-    // firebaseUser = Rx<User?>(_auth.currentUser);
-    // firebaseUser.bindStream(_auth.userChanges());
-    // ever(firebaseUser, _setInitialScreen);
+    firebaseUser.value = _auth.currentUser;
+    firebaseUser.bindStream(_auth.userChanges());
+    ever<User?>(firebaseUser, _setInitialScreen);
+    _setInitialScreen(firebaseUser.value);
     super.onReady();
   }
 
-  // void _setInitialScreen(User? user) {
-  //   if (user == null) {
-  //     Get.offAllNamed('/login');
-  //   } else {
-  //     Get.offAllNamed('/home');
-  //   }
-  // }
+  void checkAuthState() => _setInitialScreen(firebaseUser.value);
 
-  Future<void> register(String email, String password) async {
+  void _setInitialScreen(User? user) {
+    if (user == null) {
+      Get.offAllNamed('/login');
+    } else {
+      Get.offAllNamed('/home');
+    }
+  }
+
+  Future<void> register(String fullName, String email, String phoneNo, String password) async {
     try {
       isLoading.value = true;
-      await _auth.createUserWithEmailAndPassword(
+      final credentials = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      final uid = credentials.user?.uid;
+      if (uid != null) {
+        await _db.collection('users').doc(uid).set({
+          'fullName': fullName,
+          'email': email,
+          'phoneNo': phoneNo,
+          'profileImage': null,
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+      }
       isLoading.value = false;
       Get.snackbar(
         'Success',
@@ -41,7 +56,6 @@ class AuthController extends GetxController {
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
-      Get.offAllNamed('/home');
     } on FirebaseAuthException catch (e) {
       isLoading.value = false;
       Get.snackbar(
@@ -75,7 +89,6 @@ class AuthController extends GetxController {
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
-      Get.offAllNamed('/home');
     } on FirebaseAuthException catch (e) {
       isLoading.value = false;
       Get.snackbar(
@@ -99,6 +112,5 @@ class AuthController extends GetxController {
 
   Future<void> logout() async {
     await _auth.signOut();
-    Get.offAllNamed('/login');
   }
 }

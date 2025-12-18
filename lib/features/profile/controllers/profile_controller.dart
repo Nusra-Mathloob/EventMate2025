@@ -19,17 +19,15 @@ class ProfileController extends GetxController {
   }
 
   Future<void> fetchUserProfile() async {
-    final email = _authRepo.firebaseUser.value?.email;
-    if (email != null) {
+    isLoading.value = true;
+    final uid = _authRepo.firebaseUser.value?.uid;
+    if (uid != null) {
       try {
-        final snapshot = await _db
-            .collection('users')
-            .where('email', isEqualTo: email)
-            .get();
-        if (snapshot.docs.isNotEmpty) {
-          userProfile.value = UserProfileModel.fromSnapshot(
-            snapshot.docs.single,
-          );
+        final snapshot = await _db.collection('users').doc(uid).get();
+        if (snapshot.exists) {
+          userProfile.value = UserProfileModel.fromSnapshot(snapshot);
+        } else {
+          userProfile.value = null;
         }
       } catch (e) {
         Get.snackbar(
@@ -41,12 +39,17 @@ class ProfileController extends GetxController {
         );
       }
     }
+    isLoading.value = false;
   }
 
   Future<void> updateUserProfile(UserProfileModel user) async {
     try {
       isLoading.value = true;
-      await _db.collection('users').doc(user.id).update(user.toJson());
+      final docId = user.id ?? _authRepo.firebaseUser.value?.uid;
+      if (docId == null) {
+        throw Exception('User ID missing');
+      }
+      await _db.collection('users').doc(docId).update(user.toJson());
       userProfile.value = user; // Update local state
       isLoading.value = false;
       Get.snackbar(

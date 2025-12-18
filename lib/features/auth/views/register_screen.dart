@@ -73,7 +73,12 @@ class RegisterScreen extends StatelessWidget {
                           text: 'SIGNUP',
                           isLoading: controller.isLoading.value,
                           onPressed: () {
-                            controller.register(emailController.text.trim(), passwordController.text.trim());
+                            controller.register(
+                              fullNameController.text.trim(),
+                              emailController.text.trim(),
+                              phoneController.text.trim(),
+                              passwordController.text.trim(),
+                            );
                           },
                         )),
                     const SizedBox(height: 20),
