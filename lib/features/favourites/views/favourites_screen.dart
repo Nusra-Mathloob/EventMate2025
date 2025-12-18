@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../controllers/favourites_controller.dart';
-import '../../events/views/event_details_screen.dart';
+import '../../events/views/event_view_screen.dart';
 
 class FavouritesScreen extends StatelessWidget {
   const FavouritesScreen({Key? key}) : super(key: key);
@@ -98,7 +98,7 @@ class FavouritesScreen extends StatelessWidget {
             }
           } else {
             // Open event details screen for community events
-            Get.to(() => EventDetailsScreen(event: event));
+            Get.to(() => EventViewScreen(event: event));
           }
         },
         child: Column(

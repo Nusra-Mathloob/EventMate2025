@@ -5,6 +5,7 @@ import '../../../core/widgets/custom_button.dart';
 import '../controllers/event_controller.dart';
 import '../models/event_model.dart';
 import '../../auth/controllers/auth_controller.dart';
+import 'my_events_screen.dart';
 
 class AddEventScreen extends StatefulWidget {
   final EventModel? event; // If provided, we are in edit mode
@@ -106,7 +107,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
               Obx(() => CustomButton(
                     text: isEditing ? 'UPDATE EVENT' : 'CREATE EVENT',
                     isLoading: controller.isLoading.value,
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate() && selectedDate != null) {
                         final event = EventModel(
                           id: widget.event?.id,
@@ -114,13 +115,23 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           description: descriptionController.text.trim(),
                           date: selectedDate!,
                           location: locationController.text.trim(),
-                          organizerId: authController.firebaseUser.value?.uid ?? 'unknown',
+                          userId: authController.firebaseUser.value?.uid ?? 'unknown',
                         );
 
                         if (isEditing) {
-                          controller.updateEvent(event);
+                          final updated = await controller.updateEvent(event);
+                          if (updated && mounted) {
+                            // Ensure stack is Home -> My Events after update
+                            Get.until((route) => route.settings.name == '/home');
+                            Get.to(() => const EventListScreen());
+                          }
                         } else {
-                          controller.createEvent(event);
+                          final createdEvent = await controller.createEvent(event);
+                          if (createdEvent != null && mounted) {
+                            // Ensure stack is Home -> My Events after creation
+                            Get.until((route) => route.settings.name == '/home');
+                            Get.to(() => const EventListScreen());
+                          }
                         }
                       } else if (selectedDate == null) {
                         Get.snackbar('Error', 'Please select a date',

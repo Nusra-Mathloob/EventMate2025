@@ -8,6 +8,7 @@ import 'features/auth/controllers/auth_controller.dart';
 import 'features/auth/views/splash_screen.dart';
 import 'features/auth/views/login_screen.dart';
 import 'features/favourites/controllers/favourites_controller.dart';
+import 'features/events/controllers/event_controller.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -16,6 +17,8 @@ void main() async {
 
   // Register AuthController early so auth state routing works from splash
   Get.put(AuthController(), permanent: true);
+  // Make events controller available app-wide (detail screens rely on Get.find)
+  Get.put(EventController(), permanent: true);
   // Make favourites available across Browse and My Favourites screens
   Get.put(FavouritesController(), permanent: true);
 

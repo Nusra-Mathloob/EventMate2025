@@ -166,7 +166,7 @@ class EventListContent extends StatelessWidget {
                                       description: event.description,
                                       date: event.date,
                                       location: event.location,
-                                      organizerId: event.organizerId,
+                                      organizerId: event.userId,
                                       isTicketmasterEvent: false,
                                     );
                                     favouritesController.toggleFavourite(

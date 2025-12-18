@@ -3,15 +3,15 @@ import 'package:intl/intl.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../favourites/models/favourite_event_model.dart';
 
-class EventDetailsScreen extends StatelessWidget {
+class EventViewScreen extends StatelessWidget {
   final FavouriteEventModel event;
 
-  const EventDetailsScreen({Key? key, required this.event}) : super(key: key);
+  const EventViewScreen({Key? key, required this.event}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Event Details'), elevation: 0),
+      appBar: AppBar(title: const Text('View Event Details'), elevation: 0),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
