@@ -4,16 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'core/constants/app_colors.dart';
+import 'features/auth/controllers/auth_controller.dart';
 import 'features/auth/views/splash_screen.dart';
 import 'features/auth/views/login_screen.dart';
-import 'features/events/views/event_list_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // For now, we'll just run the app without Firebase init to show UI
-  // In a real app, you MUST initialize Firebase first.
+
+  // Register AuthController early so auth state routing works from splash
+  Get.put(AuthController(), permanent: true);
 
   runApp(const MyApp());
 }
@@ -38,8 +39,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Roboto', // Default, can be changed if GoogleFonts is used
       ),
-      home: const Scaffold(body: Center(child: Text('EventMate Initialized'))),
-      initialRoute: '/login',
+      initialRoute: '/splash',
       getPages: [
         GetPage(name: '/splash', page: () => const SplashScreen()),
         GetPage(name: '/login', page: () => const LoginScreen()),

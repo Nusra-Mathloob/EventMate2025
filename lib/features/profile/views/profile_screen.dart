@@ -18,13 +18,53 @@ class ProfileScreen extends StatelessWidget {
     final controller = Get.put(ProfileController());
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile'), centerTitle: true),
+      appBar: AppBar(
+        title: const Text('Profile'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            tooltip: 'Logout',
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              Get.defaultDialog(
+                title: 'Logout',
+                middleText: 'Are you sure you want to logout?',
+                textConfirm: 'Yes',
+                textCancel: 'No',
+                confirmTextColor: Colors.white,
+                onConfirm: () {
+                  Get.back();
+                  Get.find<AuthController>().logout();
+                },
+              );
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Obx(() {
+          if (controller.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
+          }
           final user = controller.userProfile.value;
           if (user == null) {
-            return const Center(child: CircularProgressIndicator());
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.person_search, size: 80, color: AppColors.primary),
+                const SizedBox(height: 16),
+                const Text(
+                  'No profile data found.',
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 12),
+                CustomButton(
+                  text: 'Retry',
+                  onPressed: controller.fetchUserProfile,
+                ),
+              ],
+            );
           }
 
           return Column(
