@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../features/auth/controllers/auth_controller.dart';
 import '../../../../core/constants/app_colors.dart';
 
 class UserManagementScreen extends StatelessWidget {
@@ -78,15 +79,43 @@ class UserManagementScreen extends StatelessWidget {
   }
 
   void _showChangePasswordDialog(BuildContext context) {
-    // Placeholder for Change Password Logic
+    final authController = Get.find<AuthController>();
+    final passwordController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+
     Get.defaultDialog(
       title: 'Change Password',
-      content: const Column(
-        children: [Text('This feature is currently under development.')],
+      content: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Form(
+          key: formKey,
+          child: TextFormField(
+            controller: passwordController,
+            decoration: const InputDecoration(
+              labelText: 'New Password',
+              prefixIcon: Icon(Icons.lock_outline),
+              border: OutlineInputBorder(),
+            ),
+            obscureText: true,
+            validator: (value) {
+              if (value == null || value.isEmpty)
+                return 'Please enter a password';
+              if (value.length < 6)
+                return 'Password must be at least 6 characters';
+              return null;
+            },
+          ),
+        ),
       ),
-      textConfirm: 'OK',
+      textConfirm: 'Change',
+      textCancel: 'Cancel',
       confirmTextColor: Colors.white,
-      onConfirm: () => Get.back(),
+      onConfirm: () async {
+        if (formKey.currentState!.validate()) {
+          Get.back(); // Close dialog
+          await authController.changePassword(passwordController.text.trim());
+        }
+      },
     );
   }
 
