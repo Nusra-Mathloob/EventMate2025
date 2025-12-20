@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../profile/models/user_profile_model.dart';
 import '../../../core/db/user_local_db.dart';
+import '../../../core/db/event_local_db.dart';
 
 class AuthController extends GetxController {
   static AuthController get instance => Get.find();
@@ -123,6 +124,7 @@ class AuthController extends GetxController {
 
   Future<void> logout() async {
     await UserLocalDb.instance.deleteUser();
+    await EventLocalDb.instance.clearAllEvents();
     await _auth.signOut();
   }
 

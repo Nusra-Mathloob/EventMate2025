@@ -73,6 +73,13 @@ class EventLocalDb {
     await _emitFromDb(); // emits current user's view if listener exists
   }
 
+  Future<void> clearAllEvents() async {
+    final db = await database;
+    await _createTable(db);
+    await db.delete(_eventTable);
+    await _emitFromDb();
+  }
+
   Future<List<EventModel>> getEvents({String? userId}) async {
     final db = await database;
     final result = await db.query(
