@@ -15,11 +15,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Register AuthController early so auth state routing works from splash
   Get.put(AuthController(), permanent: true);
-  // Make events controller available app-wide (detail screens rely on Get.find)
   Get.put(EventController(), permanent: true);
-  // Make favourites available across Browse and My Favourites screens
   Get.put(FavouritesController(), permanent: true);
 
   runApp(const MyApp());
@@ -43,7 +40,7 @@ class MyApp extends StatelessWidget {
           error: AppColors.error,
         ),
         useMaterial3: true,
-        fontFamily: 'Roboto', // Default, can be changed if GoogleFonts is used
+        fontFamily: 'Roboto',
       ),
       initialRoute: '/splash',
       getPages: [

@@ -11,7 +11,6 @@ class EventController extends GetxController {
   final _authController = Get.find<AuthController>();
   final isLoading = false.obs;
 
-  // Create Event in Firestore and return created model (with id)
   Future<EventModel?> createEvent(EventModel event) async {
     try {
       isLoading.value = true;
@@ -40,7 +39,6 @@ class EventController extends GetxController {
     }
   }
 
-  // Read Events (Stream)
   Stream<List<EventModel>> getAllEvents() {
     final uid = _authController.firebaseUser.value?.uid;
     if (uid == null) {
@@ -57,7 +55,6 @@ class EventController extends GetxController {
     });
   }
 
-  // Get events as a list (for non-stream usage)
   Future<List<EventModel>> getEventsList() async {
     final uid = _authController.firebaseUser.value?.uid;
     if (uid == null) return [];
@@ -67,7 +64,6 @@ class EventController extends GetxController {
     return events;
   }
 
-  // Update Event
   Future<bool> updateEvent(EventModel event) async {
     if (event.id == null) {
       Get.snackbar('Error', 'Event ID is missing',
@@ -94,7 +90,6 @@ class EventController extends GetxController {
     }
   }
 
-  // Delete Event
   Future<void> deleteEvent(String id) async {
     try {
       await _db.collection('events').doc(id).delete();
