@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../controllers/favourites_controller.dart';
 import '../../events/views/event_view_screen.dart';
+import '../models/favourite_event_model.dart';
 
 class FavouritesScreen extends StatelessWidget {
   const FavouritesScreen({Key? key}) : super(key: key);
@@ -62,7 +63,7 @@ class FavouritesScreen extends StatelessWidget {
 
   Widget _buildEventCard(
     BuildContext context,
-    dynamic event,
+    FavouriteEventModel event,
     FavouritesController controller,
   ) {
     return Card(
@@ -163,7 +164,7 @@ class FavouritesScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        DateFormat('MMM d, yyyy • h:mm a').format(event.date),
+                        DateFormat('MMM d, yyyy - h:mm a').format(event.date),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Colors.grey[700],
                         ),
