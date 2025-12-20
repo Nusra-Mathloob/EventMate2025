@@ -1,0 +1,265 @@
+[33mcommit 4ff949c6386c026efc5e276b8d25ab323840a73d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Sat Dec 20 07:44:17 2025 +0530
+
+    Update auth_controller.dart
+
+[33mcommit 381e6cb5fb191b9b9b0d4666e139a5e989de6de9[m
+Author: Mohamed Ishfak <mohamedisfakhm07@gmail.com>
+Date:   Sat Dec 20 00:50:12 2025 +0530
+
+    Calendar Feature
+
+[33mcommit 15ef5b16a5132d9eb51f2425a192e661bf370de8[m
+Merge: 42228ee 7d66d3d
+Author: shafeemhsn <82707683+shafeemhsn@users.noreply.github.com>
+Date:   Thu Dec 18 18:22:58 2025 +0530
+
+    Merge pull request #9 from Nusra-Mathloob/feature/event
+    
+    implement event CRUD with firebase
+
+[33mcommit 7d66d3d956e1edb4a7af0dd3dca0ec445da0a9df[m[33m ([m[1;31morigin/feature/event[m[33m)[m
+Author: shafeemhsn <shafeemuhsin@gmail.com>
+Date:   Thu Dec 18 18:22:27 2025 +0530
+
+    implement event CRUD with firebase
+
+[33mcommit 42228ee1113bdba908d06b1e6b6653ea4589e15b[m
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Thu Dec 18 15:33:31 2025 +0530
+
+    sqflite added to pubspec
+
+[33mcommit c45bf975d4493ac3b91f73f7feb499db24015fd7[m
+Merge: 5c88986 e2f7ffb
+Author: shafeemhsn <82707683+shafeemhsn@users.noreply.github.com>
+Date:   Thu Dec 18 15:19:19 2025 +0530
+
+    Merge pull request #8 from Nusra-Mathloob/feature/event
+    
+    fix browse event not loading
+
+[33mcommit e2f7ffb344d0aef182636eb0ca3421e093475dde[m
+Author: shafeemhsn <shafeemuhsin@gmail.com>
+Date:   Thu Dec 18 15:18:41 2025 +0530
+
+    fix browse event not loading
+
+[33mcommit 5c889866333fee63d49bcf0c7c8f08e9fdb783ea[m
+Merge: a04bb18 2ffe101
+Author: shafeemhsn <82707683+shafeemhsn@users.noreply.github.com>
+Date:   Thu Dec 18 15:07:56 2025 +0530
+
+    Merge pull request #7 from Nusra-Mathloob/feature/auth
+    
+    cache user profile locally with sqlite for offline access
+
+[33mcommit 2ffe101fc7ffa3a8f37bab825705a51aef8a5cfd[m[33m ([m[1;31morigin/feature/auth[m[33m)[m
+Author: shafeemhsn <shafeemuhsin@gmail.com>
+Date:   Thu Dec 18 15:06:43 2025 +0530
+
+    cache user profile locally with sqlite for offline access
+
+[33mcommit a04bb18f294ea523a5245512077830aef471a126[m
+Merge: 78b7bd3 7fbe691
+Author: shafeemhsn <82707683+shafeemhsn@users.noreply.github.com>
+Date:   Thu Dec 18 14:45:40 2025 +0530
+
+    Merge pull request #6 from Nusra-Mathloob/feature/auth
+    
+    implement auth with firebase
+
+[33mcommit 7fbe6916843ebcc4896979e1043bb8033c285b45[m
+Author: shafeemhsn <shafeemuhsin@gmail.com>
+Date:   Thu Dec 18 14:34:48 2025 +0530
+
+    implement auth with firebase
+
+[33mcommit 78b7bd3ce031e748fc1b31c527f679e7ca0da1d0[m
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Wed Dec 17 21:14:02 2025 +0530
+
+    main changed
+
+[33mcommit 8c09fecf2843ea7e41b5585d221bdd07c5f81aab[m
+Merge: c95e493 257bd16
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Wed Dec 17 20:04:01 2025 +0530
+
+    Merge pull request #5 from Nusra-Mathloob/feature/firebase
+    
+    configure firebase
+
+[33mcommit 257bd16b17af0b06afac53fd3de8b09904be0084[m[33m ([m[1;31morigin/feature/firebase[m[33m)[m
+Author: shafeemhsn <shafeemuhsin@gmail.com>
+Date:   Wed Dec 17 17:25:23 2025 +0530
+
+    configure firebase
+
+[33mcommit c95e493a637dc8d017bcac8c6959b1c18590b702[m[33m ([m[1;32mfixing-merge-conflicts[m[33m)[m
+Merge: 4418048 684b509
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Wed Dec 17 13:16:28 2025 +0530
+
+    fire base with profile
+
+[33mcommit 4418048286ee12a2c38a1b3756cce4efc41a628b[m
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Wed Dec 17 13:11:18 2025 +0530
+
+    profile controller,screen changed
+
+[33mcommit 684b509b495c66640ae1d7ec895e92c7a16c416d[m
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Wed Dec 17 12:13:23 2025 +0530
+
+    information screen, user managment screen updated
+
+[33mcommit 1272d9fd205bd8838143d6adcae12ae850dfe07f[m
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Wed Dec 17 11:58:18 2025 +0530
+
+    profile screen change
+
+[33mcommit a0937a6d874b06b243aa519964fa5fc9990f0133[m
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Tue Dec 16 23:59:05 2025 +0530
+
+    New Update
+
+[33mcommit 76720a5328be20752bd3b253d6d9ccb8d9373142[m
+Author: Kalindu <kalindu.mk@gmail.com>
+Date:   Tue Dec 16 22:45:19 2025 +0530
+
+    Fixed issues originating from previous merge
+
+[33mcommit 458fbf38e3fd79f8b0d433ea5e0e9df54ff87b18[m
+Merge: 66434ce 75315a3
+Author: Kalindu <kalindu.mk@gmail.com>
+Date:   Tue Dec 16 22:29:55 2025 +0530
+
+    Merge remote-tracking branch 'origin/main'
+    
+    # Conflicts:
+    #       lib/features/events/controllers/event_controller.dart
+    #       lib/main.dart
+
+[33mcommit 75315a3172b9467dbac63fd4ad6d75f97456240b[m[33m ([m[1;31morigin/main-backup[m[33m)[m
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Tue Dec 16 22:19:06 2025 +0530
+
+    user profile
+
+[33mcommit 66434ce31ef93bdc170dead513ef96f1e13912e5[m[33m ([m[1;31morigin/no-firebase[m[33m)[m
+Author: Kalindu <kalindu.mk@gmail.com>
+Date:   Tue Dec 16 22:07:22 2025 +0530
+
+    Commiting pubspec.lock
+
+[33mcommit 58a132d34c84fe2ce603d5b9beadffdb4480ce18[m
+Author: Kalindu <kalindu.mk@gmail.com>
+Date:   Tue Dec 16 22:07:06 2025 +0530
+
+    Added home screen, updated browse events scree and temporary disabled firebase auth for local dev
+
+[33mcommit 51c0462835aa04217989a9da254a490e2a018f82[m
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Tue Dec 16 15:40:34 2025 +0530
+
+    Update
+
+[33mcommit 80fc402293ba051a6178056871317f077cf004a9[m
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Tue Dec 16 15:24:08 2025 +0530
+
+    Update profile_screen.dart
+
+[33mcommit 134bc76990ee96772165cd1527dc7ff367c3812f[m
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Tue Dec 16 15:20:59 2025 +0530
+
+    Profile menu screen
+    
+    Billing details ,information, settings, user managment implemented
+
+[33mcommit 24cddbdb2486a2b0a9b06666e614417609353013[m
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Tue Dec 16 13:28:26 2025 +0530
+
+    Update event_controller.dart
+
+[33mcommit 5897c69567e03a90a4a00159b62d654ecf513fcc[m
+Author: Kalindu <kalindu.mk@gmail.com>
+Date:   Tue Dec 16 00:51:21 2025 +0530
+
+    Added Ticketmaster API integration
+
+[33mcommit 01dacc4449518e438f65fdbe17d80d3722958b7e[m
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Mon Dec 15 20:35:11 2025 +0530
+
+    flutter pub upgrade
+
+[33mcommit 149880473e191ce896eb7631b2cdfa55ac419d22[m
+Merge: 8e85ef9 35f0d4e
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Mon Dec 15 20:07:26 2025 +0530
+
+    Merge pull request #4 from Nusra-Mathloob/feature/events
+    
+    implement event feature
+
+[33mcommit 35f0d4e0773c4a0004414920eea7071e986d6a14[m
+Author: shafeemhsn <shafeemuhsin@gmail.com>
+Date:   Mon Dec 15 20:02:23 2025 +0530
+
+    implement event feature
+
+[33mcommit 8e85ef91cad7fa2158f918703690b74c0ee9bff9[m
+Author: Kalindu <kalindu.mk@gmail.com>
+Date:   Mon Dec 15 20:00:15 2025 +0530
+
+    Added splash screen and style elements
+
+[33mcommit 516325c007d635a818d61ecbc2499349904b2fc1[m
+Author: Mohamed Ishfak <mohamedisfakhm07@gmail.com>
+Date:   Sun Dec 14 20:50:47 2025 +0530
+
+    Ishfak
+
+[33mcommit 9675f000f563516edec7b8ae87eda4f4221892cd[m
+Merge: a3fd3e4 a9ff229
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Sun Dec 14 19:32:54 2025 +0530
+
+    Merge pull request #2 from ahmedzain95/main
+    
+    Ahmed Commit
+
+[33mcommit a9ff2296497d2550e9842d3076417bc0dfb0654b[m
+Author: Ahmed Zain <Ahmed.Zain@cloudsolution-sa.com>
+Date:   Sun Dec 14 19:23:36 2025 +0530
+
+    Ahmed Commit
+
+[33mcommit a3fd3e451c4f94addacbf6dc53c6f4e63dadf7f2[m
+Merge: eea67d6 707550f
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Sun Dec 14 19:04:38 2025 +0530
+
+    Merge pull request #1 from ahmedzain95/main
+    
+    Ahmed PR
+
+[33mcommit 707550f1fd8bfad520e3883c3d195dc85ed50317[m
+Author: Ahmed Zain <Ahmed.Zain@cloudsolution-sa.com>
+Date:   Sun Dec 14 18:39:08 2025 +0530
+
+    AmedCommit
+
+[33mcommit eea67d654d54e7348f90b79d4a505afe7a967228[m
+Author: Fithurun Nusra <60822743+Nusra-Mathloob@users.noreply.github.com>
+Date:   Sun Dec 14 10:48:27 2025 +0530
+
+    First Commit
