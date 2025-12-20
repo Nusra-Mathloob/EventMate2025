@@ -11,6 +11,8 @@ class AuthController extends GetxController {
   final _auth = FirebaseAuth.instance;
   final _db = FirebaseFirestore.instance;
   final Rx<User?> firebaseUser = Rx<User?>(null);
+
+  // 1. Reactive variable (Observable)
   var isLoading = false.obs;
 
   @override
@@ -39,6 +41,7 @@ class AuthController extends GetxController {
     String password,
   ) async {
     try {
+      // 2. Updating the state
       isLoading.value = true;
 
       final credentials = await _auth.createUserWithEmailAndPassword(
@@ -95,12 +98,15 @@ class AuthController extends GetxController {
 
   Future<void> login(String email, String password) async {
     try {
+      // 2. Updating the state
       isLoading.value = true;
       final credentials = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       await _cacheUserFromFirestore(credentials.user?.uid);
+
+      // Update state back to false
       isLoading.value = false;
       Get.snackbar(
         'Success',

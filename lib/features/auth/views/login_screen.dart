@@ -10,6 +10,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 1. Find the controller
     final controller = Get.find<AuthController>();
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
@@ -53,9 +54,11 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
+                    
+                      // 2. Wrap the widget that depends on state in Obx
                     Obx(() => CustomButton(
                           text: 'LOGIN',
-                          isLoading: controller.isLoading.value,
+                          isLoading: controller.isLoading.value,// Listens to changes!
                           onPressed: () {
                             controller.login(emailController.text.trim(), passwordController.text.trim());
                           },
