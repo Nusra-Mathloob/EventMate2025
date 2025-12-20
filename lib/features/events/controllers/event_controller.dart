@@ -1,17 +1,36 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/event_model.dart';
 import '../../auth/controllers/auth_controller.dart';
 import '../../../core/db/user_local_db.dart';
+import '../../../core/db/event_local_db.dart';
 
 class EventController extends GetxController {
   static EventController get instance => Get.find();
 
   final _db = FirebaseFirestore.instance;
   final _authController = Get.find<AuthController>();
+  final _localDb = EventLocalDb.instance;
   final isLoading = false.obs;
   String? _cachedUserName;
+  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>? _firestoreSub;
+
+  @override
+  void onReady() {
+    super.onReady();
+    final uid = _authController.firebaseUser.value?.uid;
+    if (uid != null) {
+      _ensureLocalTable();
+    }
+    ever(_authController.firebaseUser, (user) {
+      if (user != null) {
+        _ensureLocalTable();
+      }
+    });
+  }
 
   Future<EventModel?> createEvent(EventModel event) async {
     try {
@@ -25,12 +44,17 @@ class EventController extends GetxController {
       final userName = await _getCurrentUserName(uid);
       event.userId = uid;
       event.userName = userName;
+      final now = DateTime.now();
+      event.createdAt = now;
+      event.updatedAt = now;
       final docRef = await _db.collection('events').add({
         ...event.toJson(),
         'createdAt': FieldValue.serverTimestamp(),
+        'updatedAt': FieldValue.serverTimestamp(),
       });
       event.id = docRef.id;
       await docRef.update({'id': docRef.id});
+      await _localDb.upsertEvents([event]);
       Get.snackbar('Success', 'Event added successfully',
           snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green, colorText: Colors.white);
       return event;
@@ -48,24 +72,15 @@ class EventController extends GetxController {
     if (uid == null) {
       return Stream.value([]);
     }
-    return _db
-        .collection('events')
-        .where('userId', isEqualTo: uid)
-        .snapshots()
-        .map((snapshot) {
-      final events = snapshot.docs.map(EventModel.fromSnapshot).toList();
-      events.sort((a, b) => a.date.compareTo(b.date));
-      return events;
-    });
+    _startRemoteSync(uid);
+    return _localDb.watchEvents(userId: uid);
   }
 
   Future<List<EventModel>> getEventsList() async {
     final uid = _authController.firebaseUser.value?.uid;
     if (uid == null) return [];
-    final snapshot = await _db.collection('events').where('userId', isEqualTo: uid).get();
-    final events = snapshot.docs.map(EventModel.fromSnapshot).toList();
-    events.sort((a, b) => a.date.compareTo(b.date));
-    return events;
+    _startRemoteSync(uid);
+    return _localDb.getEvents(userId: uid);
   }
 
   Future<bool> updateEvent(EventModel event) async {
@@ -81,12 +96,14 @@ class EventController extends GetxController {
           ? event.userName
           : await _getCurrentUserName(event.userId);
       event.userName = userName;
+      event.updatedAt = DateTime.now();
       await _db.collection('events').doc(event.id).update({
         ...event.toJson(),
         'userId': event.userId,
         'userName': userName,
         'updatedAt': FieldValue.serverTimestamp(),
       });
+      await _localDb.upsertEvents([event]);
       Get.snackbar('Success', 'Event updated successfully',
           snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green, colorText: Colors.white);
       return true;
@@ -102,6 +119,7 @@ class EventController extends GetxController {
   Future<void> deleteEvent(String id) async {
     try {
       await _db.collection('events').doc(id).delete();
+      await _localDb.deleteEvent(id);
       Get.snackbar(
         'Success',
         'Event deleted successfully',
@@ -145,5 +163,31 @@ class EventController extends GetxController {
     }
     _cachedUserName = '';
     return '';
+  }
+
+  void _startRemoteSync(String uid) {
+    if (_firestoreSub != null) return;
+    _firestoreSub = _db
+        .collection('events')
+        .where('userId', isEqualTo: uid)
+        .snapshots()
+        .listen((snapshot) async {
+      final events = snapshot.docs.map(EventModel.fromSnapshot).toList();
+      await _localDb.replaceUserEvents(uid, events);
+    });
+  }
+
+  Future<void> _ensureLocalTable() async {
+    try {
+      await _localDb.ensureTableExists();
+    } catch (_) {
+      // ignore failures; Firestore stream will surface issues if any
+    }
+  }
+
+  @override
+  void onClose() {
+    _firestoreSub?.cancel();
+    super.onClose();
   }
 }
