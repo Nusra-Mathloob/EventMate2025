@@ -60,7 +60,7 @@ class InformationScreen extends StatelessWidget {
             icon: Icons.android,
             title: 'App Version',
             subtitle: '1.0.0',
-            onTap: () {}, // No action needed
+            onTap: () {},
             showArrow: false,
           ),
         ],

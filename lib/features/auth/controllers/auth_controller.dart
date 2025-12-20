@@ -8,7 +8,6 @@ import '../../../core/db/user_local_db.dart';
 class AuthController extends GetxController {
   static AuthController get instance => Get.find();
 
-  // Variables
   final _auth = FirebaseAuth.instance;
   final _db = FirebaseFirestore.instance;
   final Rx<User?> firebaseUser = Rx<User?>(null);

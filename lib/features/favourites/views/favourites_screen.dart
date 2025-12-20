@@ -97,14 +97,12 @@ class FavouritesScreen extends StatelessWidget {
               );
             }
           } else {
-            // Open event details screen for community events
             Get.to(() => EventViewScreen(event: event));
           }
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image section (if available)
             if (event.imageUrl != null && event.imageUrl!.isNotEmpty)
               ClipRRect(
                 borderRadius: const BorderRadius.vertical(
@@ -129,13 +127,11 @@ class FavouritesScreen extends StatelessWidget {
                 ),
               ),
 
-            // Event info section
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Title and favourite button
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -158,7 +154,6 @@ class FavouritesScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
 
-                  // Date
                   Row(
                     children: [
                       Icon(
@@ -177,7 +172,6 @@ class FavouritesScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
 
-                  // Location
                   Row(
                     children: [
                       Icon(
@@ -199,7 +193,6 @@ class FavouritesScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
 
-                  // Event type badge
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,

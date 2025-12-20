@@ -151,8 +151,7 @@ class ProfileScreen extends StatelessWidget {
                 textColor: Colors.red,
                 endIcon: false,
                 onPress: () {
-                  Get.find<AuthController>()
-                      .logout(); // Assuming AuthController is available
+                  Get.find<AuthController>().logout();
                 },
               ),
               const SizedBox(height: 20),
