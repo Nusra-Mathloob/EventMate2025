@@ -135,15 +135,9 @@ class UserManagementScreen extends StatelessWidget {
       confirmTextColor: Colors.white,
       buttonColor: Colors.red,
       onCancel: () {},
-      onConfirm: () {
-        // TODO: Call Delete Account API
-        Get.back();
-        Get.snackbar(
-          'Account Deleted',
-          'Your account has been successfully deleted.',
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+      onConfirm: () async {
+        Get.back(); // Close dialog
+        await Get.find<AuthController>().deleteAccount();
       },
     );
   }

@@ -59,6 +59,7 @@ class ProfileController extends GetxController {
         backgroundColor: Colors.green,
         colorText: Colors.white,
       );
+      Get.back();
       Get.offNamed('/profile');
     } catch (e) {
       isLoading.value = false;

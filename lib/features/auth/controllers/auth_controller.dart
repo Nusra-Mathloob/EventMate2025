@@ -173,6 +173,55 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<void> deleteAccount() async {
+    try {
+      isLoading.value = true;
+      final uid = _auth.currentUser?.uid;
+      if (uid == null) throw Exception('User not found');
+
+      // 1. Delete Firestore User Document
+      await _db.collection('users').doc(uid).delete();
+
+      // 2. Delete Auth Account
+      await _auth.currentUser?.delete();
+
+      // 3. Cleanup Local DB & Sign Out
+      await logout();
+
+      isLoading.value = false;
+      Get.snackbar(
+        'Success',
+        'Account deleted successfully',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+    } on FirebaseAuthException catch (e) {
+      isLoading.value = false;
+      String message = e.message ?? 'An error occurred';
+      if (e.code == 'requires-recent-login') {
+        message =
+            'Please re-login to delete your account for security reasons.';
+      }
+      Get.snackbar(
+        'Error',
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } catch (_) {
+      isLoading.value = false;
+      Get.snackbar(
+        'Error',
+        'Something went wrong',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
+
   Future<void> _cacheUserFromFirestore(String? uid) async {
     if (uid == null) return;
     final doc = await _db.collection('users').doc(uid).get();
