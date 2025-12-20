@@ -6,12 +6,15 @@ import '../../profile/models/user_profile_model.dart';
 import '../../../core/db/user_local_db.dart';
 
 class AuthController extends GetxController {
-  static AuthController get instance => Get.find();
+  // static getter to easily access the instance
+  static AuthController get instance => Get.find(); // Global access point
 
   // Variables
   final _auth = FirebaseAuth.instance;
   final _db = FirebaseFirestore.instance;
   final Rx<User?> firebaseUser = Rx<User?>(null);
+
+  // 1. Define an observable variable
   var isLoading = false.obs;
 
   @override
@@ -33,9 +36,16 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> register(String fullName, String email, String phoneNo, String password) async {
+  Future<void> register(
+    String fullName,
+    String email,
+    String phoneNo,
+    String password,
+  ) async {
     try {
+      // 2. Update the state
       isLoading.value = true;
+
       final credentials = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -91,7 +101,10 @@ class AuthController extends GetxController {
   Future<void> login(String email, String password) async {
     try {
       isLoading.value = true;
-      final credentials = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      final credentials = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       await _cacheUserFromFirestore(credentials.user?.uid);
       isLoading.value = false;
       Get.snackbar(
