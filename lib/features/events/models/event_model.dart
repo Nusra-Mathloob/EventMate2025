@@ -7,6 +7,7 @@ class EventModel {
   DateTime date;
   String location;
   String userId;
+  String userName;
 
   EventModel({
     this.id,
@@ -15,6 +16,7 @@ class EventModel {
     required this.date,
     required this.location,
     required this.userId,
+    this.userName = '',
   });
 
   factory EventModel.fromJson(Map<String, dynamic> json) {
@@ -33,6 +35,7 @@ class EventModel {
       date: parsedDate,
       location: json['location'],
       userId: json['userId'] ?? json['organizerId'],
+      userName: json['userName'] ?? json['organizerName'] ?? '',
     );
   }
 
@@ -55,6 +58,7 @@ class EventModel {
       date: parsedDate,
       location: data['location'] ?? '',
       userId: data['userId'] ?? data['organizerId'] ?? '',
+      userName: data['userName'] ?? data['organizerName'] ?? '',
     );
   }
 
@@ -65,6 +69,7 @@ class EventModel {
       'date': Timestamp.fromDate(date),
       'location': location,
       'userId': userId,
+      'userName': userName,
     };
   }
 }

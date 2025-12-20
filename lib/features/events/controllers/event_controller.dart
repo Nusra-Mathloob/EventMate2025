@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/event_model.dart';
 import '../../auth/controllers/auth_controller.dart';
+import '../../../core/db/user_local_db.dart';
 
 class EventController extends GetxController {
   static EventController get instance => Get.find();
@@ -10,6 +11,7 @@ class EventController extends GetxController {
   final _db = FirebaseFirestore.instance;
   final _authController = Get.find<AuthController>();
   final isLoading = false.obs;
+  String? _cachedUserName;
 
   Future<EventModel?> createEvent(EventModel event) async {
     try {
@@ -20,7 +22,9 @@ class EventController extends GetxController {
             snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, colorText: Colors.white);
         return null;
       }
+      final userName = await _getCurrentUserName(uid);
       event.userId = uid;
+      event.userName = userName;
       final docRef = await _db.collection('events').add({
         ...event.toJson(),
         'createdAt': FieldValue.serverTimestamp(),
@@ -73,9 +77,14 @@ class EventController extends GetxController {
 
     try {
       isLoading.value = true;
+      final userName = event.userName.isNotEmpty
+          ? event.userName
+          : await _getCurrentUserName(event.userId);
+      event.userName = userName;
       await _db.collection('events').doc(event.id).update({
         ...event.toJson(),
         'userId': event.userId,
+        'userName': userName,
         'updatedAt': FieldValue.serverTimestamp(),
       });
       Get.snackbar('Success', 'Event updated successfully',
@@ -104,5 +113,37 @@ class EventController extends GetxController {
       Get.snackbar('Error', 'Failed to delete event',
           snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, colorText: Colors.white);
     }
+  }
+
+  Future<String> _getCurrentUserName(String uid) async {
+    if (_cachedUserName != null && _cachedUserName!.isNotEmpty) {
+      return _cachedUserName!;
+    }
+
+    try {
+      final cachedUser = await UserLocalDb.instance.getUser();
+      final cachedName = cachedUser?.fullName.trim();
+      if (cachedName != null && cachedName.isNotEmpty) {
+        _cachedUserName = cachedName;
+        return cachedName;
+      }
+
+      final displayName = _authController.firebaseUser.value?.displayName?.trim();
+      if (displayName != null && displayName.isNotEmpty) {
+        _cachedUserName = displayName;
+        return displayName;
+      }
+
+      final doc = await _db.collection('users').doc(uid).get();
+      final remoteName = doc.data()?['fullName']?.toString().trim();
+      if (remoteName != null && remoteName.isNotEmpty) {
+        _cachedUserName = remoteName;
+        return remoteName;
+      }
+    } catch (_) {
+      // Ignore and fall through to fallback
+    }
+    _cachedUserName = '';
+    return '';
   }
 }
