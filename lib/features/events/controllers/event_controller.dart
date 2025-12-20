@@ -76,6 +76,14 @@ class EventController extends GetxController {
     return _localDb.watchEvents(userId: uid);
   }
 
+  Stream<List<EventModel>> getCommunityEvents() {
+    return _db.collection('events').snapshots().map((snapshot) {
+      final events = snapshot.docs.map(EventModel.fromSnapshot).toList();
+      events.sort((a, b) => a.date.compareTo(b.date));
+      return events;
+    });
+  }
+
   Future<List<EventModel>> getEventsList() async {
     final uid = _authController.firebaseUser.value?.uid;
     if (uid == null) return [];
