@@ -28,13 +28,11 @@ class EventViewScreen extends StatelessWidget {
                 ),
               ),
 
-            // Event Details
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Title
                   Text(
                     event.title,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -43,7 +41,6 @@ class EventViewScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
 
-                  // Date
                   _buildInfoRow(
                     context,
                     icon: Icons.calendar_today,
@@ -52,7 +49,6 @@ class EventViewScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
 
-                  // Time
                   _buildInfoRow(
                     context,
                     icon: Icons.access_time,
@@ -61,7 +57,6 @@ class EventViewScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
 
-                  // Location
                   _buildInfoRow(
                     context,
                     icon: Icons.location_on,
@@ -70,7 +65,6 @@ class EventViewScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
 
-                  // Description
                   Text(
                     'About Event',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -87,7 +81,6 @@ class EventViewScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
 
-                  // Event Type Badge
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,

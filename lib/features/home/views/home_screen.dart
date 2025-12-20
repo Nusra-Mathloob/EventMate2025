@@ -182,7 +182,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 12),
-                          // Firestore Events
                           ...firestoreEvents
                               .where((e) => isSameDay(e.date, selectedDate!))
                               .map(
@@ -205,7 +204,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                               ),
-                          // Favourites Events (Ticketmaster & Community)
                           ...favEvents
                               .where((e) {
                                 final matchesDate = isSameDay(
