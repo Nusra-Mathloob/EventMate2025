@@ -58,6 +58,22 @@ class FavouritesLocalDb {
     await db.delete(_tableName);
   }
 
+  Future<void> replaceAll(List<FavouriteEventModel> events) async {
+    final db = await database;
+    await db.transaction((txn) async {
+      await txn.delete(_tableName);
+      final batch = txn.batch();
+      for (final event in events) {
+        batch.insert(
+          _tableName,
+          _toDbMap(event),
+          conflictAlgorithm: ConflictAlgorithm.replace,
+        );
+      }
+      await batch.commit(noResult: true);
+    });
+  }
+
   Map<String, dynamic> _toDbMap(FavouriteEventModel event) {
     return {
       'id': event.id,
