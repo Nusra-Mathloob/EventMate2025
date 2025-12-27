@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../models/ticketmaster_event.dart';
@@ -33,6 +34,18 @@ class BrowseController extends GetxController {
       print('BrowseController: Fetched ${fetchedEvents.length} events'); 
       events.value = fetchedEvents;
       isLoading.value = false;
+    } on SocketException {
+      print('BrowseController: No internet connection'); 
+      isLoading.value = false;
+      errorMessage.value = 'No internet connection. Please check your network settings and try again.';
+      Get.snackbar(
+        'No Internet Connection',
+        'Please check your network settings and try again.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
+        icon: const Icon(Icons.wifi_off, color: Colors.white),
+      );
     } catch (e) {
       print('BrowseController: Error - $e'); 
       isLoading.value = false;

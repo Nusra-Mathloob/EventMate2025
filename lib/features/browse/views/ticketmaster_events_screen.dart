@@ -43,14 +43,21 @@ class TicketmasterEventsScreen extends StatelessWidget {
             }
 
             if (controller.errorMessage.value.isNotEmpty) {
+              final isNetworkError = controller.errorMessage.value.toLowerCase().contains('internet') ||
+                  controller.errorMessage.value.toLowerCase().contains('network');
+              
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.error_outline, size: 64, color: Colors.red[300]),
+                    Icon(
+                      isNetworkError ? Icons.wifi_off : Icons.error_outline,
+                      size: 64,
+                      color: isNetworkError ? Colors.orange[300] : Colors.red[300],
+                    ),
                     const SizedBox(height: 16),
                     Text(
-                      'Error loading events',
+                      isNetworkError ? 'No Internet Connection' : 'Error loading events',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 8),
@@ -67,6 +74,10 @@ class TicketmasterEventsScreen extends StatelessWidget {
                       onPressed: () => controller.fetchEvents(),
                       icon: const Icon(Icons.refresh),
                       label: const Text('Retry'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: isNetworkError ? Colors.orange : AppColors.primary,
+                        foregroundColor: Colors.white,
+                      ),
                     ),
                   ],
                 ),
